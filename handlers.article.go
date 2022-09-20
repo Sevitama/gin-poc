@@ -3,6 +3,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -10,7 +11,7 @@ import (
 )
 
 func showIndexPage(c *gin.Context) {
-	articles := getAllArticles()
+	globalArticles := getAllArticles()
 
 	// Call the HTML method of the Context to render a template
 	c.HTML(
@@ -21,7 +22,7 @@ func showIndexPage(c *gin.Context) {
 		// Pass the data that the page uses
 		gin.H{
 			"title":   "Home Page",
-			"payload": articles,
+			"payload": globalArticles,
 		},
 	)
 
@@ -29,9 +30,12 @@ func showIndexPage(c *gin.Context) {
 
 func getArticle(c *gin.Context) {
 	// Check if the article ID is valid
+	fmt.Println(strconv.Atoi(c.Param("article_id")))
+
 	if articleID, err := strconv.Atoi(c.Param("article_id")); err == nil {
 		// Check if the article exists
-		if article, err := getArticleByID(articleID); err == nil {
+		if article := getArticleByID(articleID); err == nil {
+
 			// Call the HTML method of the Context to render a template
 			c.HTML(
 				// Set the HTTP status to 200 (OK)
