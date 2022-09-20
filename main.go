@@ -7,9 +7,9 @@ import (
 )
 
 var router *gin.Engine
+var globalArticles []article
 
 func main() {
-
 	// Set the router as the default one provided by Gin
 	router = gin.Default()
 
@@ -20,8 +20,10 @@ func main() {
 	// Handle Index
 	router.GET("/", showIndexPage)
 	router.GET("/article/view/:article_id", getArticle)
-
+	router.GET("/ping", func(c *gin.Context) {
+		c.String(200, "pong")
+	})
 	// Start serving the application
-	router.Run()
+	router.Run(":8080")
 
 }
