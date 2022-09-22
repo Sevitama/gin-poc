@@ -1,17 +1,18 @@
 // handlers.article.go
 
-package main
+package handlers
 
 import (
 	"fmt"
 	"net/http"
 	"strconv"
 
+	"github.com/Sevitama/gin-poc/models"
 	"github.com/gin-gonic/gin"
 )
 
-func showIndexPage(c *gin.Context) {
-	globalArticles := getAllArticles()
+func ShowIndexPage(c *gin.Context) {
+	globalArticles := models.GetAllArticles()
 
 	// Call the HTML method of the Context to render a template
 	c.HTML(
@@ -28,13 +29,13 @@ func showIndexPage(c *gin.Context) {
 
 }
 
-func getArticle(c *gin.Context) {
+func GetArticle(c *gin.Context) {
 	// Check if the article ID is valid
 	fmt.Println(strconv.Atoi(c.Param("article_id")))
 
 	if articleID, err := strconv.Atoi(c.Param("article_id")); err == nil {
 		// Check if the article exists
-		if article := getArticleByID(articleID); err == nil {
+		if article := models.GetArticleByID(articleID); err == nil {
 
 			// Call the HTML method of the Context to render a template
 			c.HTML(

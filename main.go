@@ -3,11 +3,13 @@
 package main
 
 import (
+	"github.com/Sevitama/gin-poc/handlers"
+	"github.com/Sevitama/gin-poc/models"
 	"github.com/gin-gonic/gin"
 )
 
 var router *gin.Engine
-var globalArticles []article
+var globalArticles []models.Article
 
 func main() {
 	// Set the router as the default one provided by Gin
@@ -18,8 +20,8 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 
 	// Handle Index
-	router.GET("/", showIndexPage)
-	router.GET("/article/view/:article_id", getArticle)
+	router.GET("/", handlers.ShowIndexPage)
+	router.GET("/article/view/:article_id", handlers.GetArticle)
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})

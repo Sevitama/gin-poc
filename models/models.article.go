@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"database/sql"
@@ -12,13 +12,13 @@ const dbpass = "postgres"
 const dbname = "newsplatform"
 const dbip = "0.0.0.0"
 
-type article struct {
+type Article struct {
 	ID      int    `json:"id"`
 	Title   string `json:"title"`
 	Content string `json:"content"`
 }
 
-func getAllArticles() []article {
+func GetAllArticles() []Article {
 	connStr := "postgres://" + dbuser + ":" + dbpass + "@" + dbip + "/" + dbname + "?sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	println("here")
@@ -34,10 +34,10 @@ func getAllArticles() []article {
 		fmt.Println("Err", err.Error())
 		return nil
 	}
-	articles := []article{}
+	articles := []Article{}
 
 	for results.Next() {
-		var prod article
+		var prod Article
 		err = results.Scan(&prod.ID, &prod.Title, &prod.Content)
 		if err != nil {
 			panic(err.Error())
@@ -47,10 +47,10 @@ func getAllArticles() []article {
 	return articles
 }
 
-func getArticleByID(id int) *article {
+func GetArticleByID(id int) *Article {
 	connStr := "postgres://" + dbuser + ":" + dbpass + "@" + dbip + "/" + dbname + "?sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
-	prod := &article{}
+	prod := &Article{}
 
 	if err != nil {
 		fmt.Println("Err", err.Error())
