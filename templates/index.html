@@ -1,18 +1,28 @@
 <!--index.html-->
+<html>
+  <head>
+    <!--Use the title variable to set the title of the page-->
+    <title>SQL Injection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
 
-<!--Embed the header.html template at this location-->
-{{ template "header.html" .}}
+    <!--Use bootstrap to make the application look nice-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </head>
 
-  <!--Loop over the payload variable, which is the list of articles-->
-  {{range .payload }}
-    <!--Create the link for the article based on its ID-->
-    <a href="/article/view/{{.ID}}">
-      <!--Display the title of the article -->
-      <h2>{{.Title}}</h2>
-    </a>
-    <!--Display the content of the article-->
-    <p>Article ID: {{.ID}}</p>
-  {{end}}
+  <body>
 
-<!--Embed the footer.html template at this location-->
-{{ template "footer.html" .}}
+  <form action="/article/secure/">
+    <label for="secure_input">Get Article with id (secure):</label>
+    <input type="text" id="secure_input" name="title">
+    <input type="submit" value="Submit">
+  </form>
+
+  <form action="/article/insecure/">
+    <label for="insecure_input">Get Article with id (insecure!):</label>
+    <input type="text" id="insecure_input" name="title">
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
