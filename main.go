@@ -25,6 +25,6 @@ func main() {
 		c.String(200, "pong")
 	})
 	// Start serving the application
-	router.Run()
+	router.RunTLS(":8080", "certs/server.cert", "certs/server.key")
 
 }
