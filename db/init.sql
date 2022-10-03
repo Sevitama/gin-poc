@@ -1,7 +1,7 @@
 CREATE TABLE accounts (
   id INTEGER PRIMARY KEY,
   username VARCHAR(30) NOT NULL,
-  pw VARCHAR(100) NOT NULL
+  passwordhash VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE article (
@@ -10,8 +10,8 @@ CREATE TABLE article (
   content VARCHAR(200) NOT NULL
 );
 
-INSERT INTO accounts (id, username, pw) VALUES
-(1001, 'mmartinez', 'banane'),
+INSERT INTO accounts (id, username, passwordhash) VALUES
+(1001, 'mmartinez', '$2a$10$bcY3nIkDGlWizbBlb8By1ey7QeT1vlNjjcsNxt0lLwAr3XpUpSXry'),
 (1002, 'r1ehrens', 'apfel'),
 (1003, 's1grimm', 'biere');
 
