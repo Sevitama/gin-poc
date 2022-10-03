@@ -24,6 +24,7 @@ func main() {
 	router.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
+	router.POST("/signin", handlers.SignIn)
 	// Start serving the application
 	router.Run()
 

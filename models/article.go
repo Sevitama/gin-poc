@@ -1,67 +1,49 @@
 package models
 
 import (
-  "database/sql"
-  "fmt"
+	"database/sql"
+	"fmt"
 
-  _ "github.com/lib/pq"
+	_ "github.com/lib/pq"
 )
 
-const dbuser = "postgres"
-const dbpass = "postgres"
-const dbname = "newsplatform"
-const dbip = "0.0.0.0"
-
 type Article struct {
-  ID      int    `json:"id"`
-  Title   string `json:"title"`
-  Content string `json:"content"`
+	ID      int    `json:"id"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
 }
 
-func getRows(sqlStatement string, values []any) (*sql.Rows, error) {
-  connStr := "postgres://" + dbuser + ":" + dbpass + "@" + dbip + "/" + dbname + "?sslmode=disable"
-  db, err := sql.Open("postgres", connStr)
+func convertRowsToArticles(results *sql.Rows) []Article {
+	articles := []Article{}
 
-  if err != nil {
-    fmt.Println("Err", err.Error())
-    return nil, err
-  }
-  defer db.Close()
-
-  return db.Query(sqlStatement, values...)
-}
-
-func convertRowsToArticles(results *sql.Rows) [] Article {
-  articles := []Article{}
-
-  for results.Next() {
-    var prod Article
-    err := results.Scan(&prod.ID, &prod.Title, &prod.Content)
-    if err != nil {
-      panic(err.Error())
-    }
-    articles = append(articles, prod)
-  }
-  return articles
+	for results.Next() {
+		var prod Article
+		err := results.Scan(&prod.ID, &prod.Title, &prod.Content)
+		if err != nil {
+			panic(err.Error())
+		}
+		articles = append(articles, prod)
+	}
+	return articles
 }
 
 func GetArticles(sqlStatement string, values []any) []Article {
-  results, err := getRows(sqlStatement, values)
+	results, err := getRows(sqlStatement, values)
 
-  if err != nil {
-    fmt.Println("Err", err.Error())
-    return nil
-  }
+	if err != nil {
+		fmt.Println("Err", err.Error())
+		return nil
+	}
 
-  return convertRowsToArticles(results)
+	return convertRowsToArticles(results)
 }
 
 func GetArticlesByTitleInsecure(title string) []Article {
-  // db.Query(fmt.Sprintf("SELECT * FROM article WHERE title = '%s'", title))
-  return GetArticles(fmt.Sprintf("SELECT * FROM article WHERE title = '%s'", title), []any{})
+	// db.Query(fmt.Sprintf("SELECT * FROM article WHERE title = '%s'", title))
+	return GetArticles(fmt.Sprintf("SELECT * FROM article WHERE title = '%s'", title), []any{})
 }
 
 func GetArticlesByTitleSecure(title string) []Article {
-  // db.Query("SELECT * FROM article WHERE title = $1", title)
-  return GetArticles("SELECT * FROM article WHERE title = $1", []any{title})
+	// db.Query("SELECT * FROM article WHERE title = $1", title)
+	return GetArticles("SELECT * FROM article WHERE title = $1", []any{title})
 }
