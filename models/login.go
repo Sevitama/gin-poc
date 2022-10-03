@@ -26,10 +26,7 @@ type User struct {
 }
 
 func CheckCredential(username string, password string) bool {
-	fmt.Println(username)
-	fmt.Println(password)
 	user := GetUser("SELECT * FROM accounts WHERE username = $1", []any{username})
-	fmt.Println(user)
 
 	bytePassword := []byte(password)
 	byteHash := []byte(user[0].PasswordHash)
@@ -44,11 +41,7 @@ func CheckCredential(username string, password string) bool {
 }
 
 func GetUser(sqlStatement string, values []any) []Credential {
-	fmt.Println(sqlStatement)
-	fmt.Println(values...)
 	results, err := getRows(sqlStatement, values)
-	fmt.Println("results")
-	fmt.Println(results)
 
 	if err != nil {
 		fmt.Println("Err", err.Error())
@@ -60,8 +53,6 @@ func GetUser(sqlStatement string, values []any) []Credential {
 
 func convertRowsToCredential(results *sql.Rows) []Credential {
 	credentials := []Credential{}
-	fmt.Println("results2")
-	fmt.Println(results)
 	for results.Next() {
 		var prod Credential
 		err := results.Scan(&prod.Id, &prod.Username, &prod.PasswordHash)
@@ -70,7 +61,5 @@ func convertRowsToCredential(results *sql.Rows) []Credential {
 		}
 		credentials = append(credentials, prod)
 	}
-	fmt.Println("creds")
-	fmt.Println(credentials)
 	return credentials
 }
