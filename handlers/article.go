@@ -15,10 +15,10 @@ func GetArticles(c *gin.Context, getArticles func(string) []models.Article) {
 	c.HTML(http.StatusOK, "article.html", gin.H{"payload": articles})
 }
 
-func GetArticlesSecure(c *gin.Context) {
-	GetArticles(c, models.GetArticlesByTitleSecure)
+func GetArticlesSecureSQLInjection(c *gin.Context) {
+	GetArticles(c, models.GetArticlesByTitleSecureSQLInjection)
 }
 
-func GetArticlesInsecure(c *gin.Context) {
-	GetArticles(c, models.GetArticlesByTitleInsecure)
+func GetArticlesInsecureSQLInjection(c *gin.Context) {
+	GetArticles(c, models.GetArticlesByTitleInsecureSQLInjection)
 }

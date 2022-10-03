@@ -19,11 +19,8 @@ func main() {
 
 	// Handle Index
 	router.GET("/", handlers.ShowIndexPage)
-	router.GET("/article/secure/", handlers.GetArticlesSecure)
-	router.GET("/article/insecure/", handlers.GetArticlesInsecure)
-	router.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong")
-	})
+	router.GET("/article/secureSQLi/", handlers.GetArticlesSecureSQLInjection)
+	router.GET("/article/insecureSQLi/", handlers.GetArticlesInsecureSQLInjection)
 	router.POST("/signin", handlers.SignIn)
 	// Start serving the application
 	router.Run()
