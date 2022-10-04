@@ -26,6 +26,6 @@ func main() {
 	})
 	router.POST("/signin", handlers.SignIn)
 	// Start serving the application
-	router.Run()
+	router.RunTLS(":8080", "certs/server.cert", "certs/server.key")
 
 }
