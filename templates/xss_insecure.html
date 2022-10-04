@@ -10,11 +10,7 @@
     <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </head>
   <body>
-    {{range .payload }}
-      <h1>{{ .Title }} ({{ .ID }})</h1>
-      <p>{{ .Content }}</p>
-    {{end}}
-
+    <script>{{ .value }}</script>
     <form action="/">
       <input type="submit" value="Homepage" />
     </form>

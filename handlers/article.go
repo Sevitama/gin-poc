@@ -4,6 +4,7 @@ package handlers
 
 import (
 	"net/http"
+  "html/template"
 
 	"github.com/Sevitama/gin-poc/models"
 	"github.com/gin-gonic/gin"
@@ -15,10 +16,20 @@ func GetArticles(c *gin.Context, getArticles func(string) []models.Article) {
 	c.HTML(http.StatusOK, "article.html", gin.H{"payload": articles})
 }
 
-func GetArticlesSecure(c *gin.Context) {
-	GetArticles(c, models.GetArticlesByTitleSecure)
+func GetArticlesSecureSQLi(c *gin.Context) {
+	GetArticles(c, models.GetArticlesByTitleSecureSQLi)
 }
 
-func GetArticlesInsecure(c *gin.Context) {
-	GetArticles(c, models.GetArticlesByTitleInsecure)
+func GetArticlesInsecureSQLi(c *gin.Context) {
+	GetArticles(c, models.GetArticlesByTitleInsecureSQLi)
+}
+
+func GetArticlesSecureXSS(c *gin.Context) {
+  value := c.Query("title")
+	c.HTML(http.StatusOK, "xss_secure.html", gin.H{"value": value})
+}
+
+func GetArticlesInsecureXSS(c *gin.Context) {
+  value := c.Query("title")
+	c.HTML(http.StatusOK, "xss_insecure.html", gin.H{"value": template.JS(value)})
 }

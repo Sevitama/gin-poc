@@ -13,14 +13,26 @@
 
   <body>
 
-  <form action="/article/secure/">
-    <label for="secure_input">Get Article with id (secure):</label>
+  <form action="/article/secureSQLi/">
+    <label for="secure_input">Get Article with title (secure SQLi):</label>
     <input type="text" id="secure_input" name="title">
     <input type="submit" value="Submit">
   </form>
 
-  <form action="/article/insecure/">
-    <label for="insecure_input">Get Article with id (insecure!):</label>
+  <form action="/article/insecureSQLi/">
+    <label for="insecure_input">Get Article with title (insecure SQLi!):</label>
+    <input type="text" id="insecure_input" name="title">
+    <input type="submit" value="Submit">
+  </form>
+
+  <form action="/article/secureXSS/">
+    <label for="insecure_input">Get Article with title (secure XSS):</label>
+    <input type="text" id="insecure_input" name="title">
+    <input type="submit" value="Submit">
+  </form>
+
+  <form action="/article/insecureXSS/">
+    <label for="insecure_input">Get Article with title (insecure XSS!):</label>
     <input type="text" id="insecure_input" name="title">
     <input type="submit" value="Submit">
   </form>

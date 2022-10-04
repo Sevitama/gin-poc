@@ -19,11 +19,10 @@ func main() {
 
 	// Handle Index
 	router.GET("/", handlers.ShowIndexPage)
-	router.GET("/article/secure/", handlers.GetArticlesSecure)
-	router.GET("/article/insecure/", handlers.GetArticlesInsecure)
-	router.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong")
-	})
+	router.GET("/article/secureSQLi/", handlers.GetArticlesSecureSQLi)
+	router.GET("/article/insecureSQLi/", handlers.GetArticlesInsecureSQLi)
+	router.GET("/article/secureXSS/", handlers.GetArticlesSecureXSS)
+	router.GET("/article/insecureXSS/", handlers.GetArticlesInsecureXSS)
 	router.POST("/signin", handlers.SignIn)
 	// Start serving the application
 	router.RunTLS(":8080", "certs/server.cert", "certs/server.key")
