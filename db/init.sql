@@ -19,3 +19,4 @@ INSERT INTO article (id, title, content) VALUES
 (1001, 'Voting result', 'All votings are a draft.'),
 (1002, 'Teslas new invention', 'The newest Tesla has now legs instead of wheels.'),
 (1003, 'Security in software analysed', 'Around 10% of software engineers do use input validation and prepared statements. The rest do whatever they want.');
+(1004, '<script>alert("hi")</script>', 'Around 10% of software engineers do use input validation and prepared statements. The rest do whatever they want.');

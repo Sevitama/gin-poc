@@ -38,12 +38,16 @@ func GetArticles(sqlStatement string, values []any) []Article {
 	return convertRowsToArticles(results)
 }
 
-func GetArticlesByTitleInsecureSQLInjection(title string) []Article {
+func GetArticlesByTitleInsecureSQLi(title string) []Article {
 	// db.Query(fmt.Sprintf("SELECT * FROM article WHERE title = '%s'", title))
 	return GetArticles(fmt.Sprintf("SELECT * FROM article WHERE title = '%s'", title), []any{})
 }
 
-func GetArticlesByTitleSecureSQLInjection(title string) []Article {
+func GetArticlesByTitleSecureSQLi(title string) []Article {
 	// db.Query("SELECT * FROM article WHERE title = $1", title)
+	return GetArticles("SELECT * FROM article WHERE title = $1", []any{title})
+}
+
+func GetArticlesByTitleSecureXSS(title string) []Article {
 	return GetArticles("SELECT * FROM article WHERE title = $1", []any{title})
 }
