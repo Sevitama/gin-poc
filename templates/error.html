@@ -1,4 +1,3 @@
-<!--article.html-->
 <html>
   <head>
     <title>Login</title>
@@ -10,12 +9,7 @@
     <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </head>
   <body>
-      <p>Login successful: {{ .authenticated }}</p>
-
-    <form action="/data">
-      <input type="hidden" value={{ .token }}  name="token">
-      <input type="submit" value="Get data" />
-    </form>
+    <h1>{{ .error }}</h1>
 
     <form action="/">
       <input type="submit" value="Homepage" />

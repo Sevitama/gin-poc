@@ -3,63 +3,52 @@
 package models
 
 import (
-	"database/sql"
-	"fmt"
-
-	"golang.org/x/crypto/bcrypt"
-)
-
-const (
-	MinCost     int = 4  // the minimum allowable cost as passed in to GenerateFromPassword
-	MaxCost     int = 31 // the maximum allowable cost as passed in to GenerateFromPassword
-	DefaultCost int = 10 // the cost that will actually be set if a cost below MinCost is passed into GenerateFromPassword
+  "golang.org/x/crypto/bcrypt"
+  "github.com/Sevitama/gin-poc/utils/token"
 )
 
 type Credential struct {
-	Id           int    `json:"id"`
-	Username     string `json:"username"`
-	PasswordHash string `json:"passwordhash"`
+  Id           int    `json:"id"`
+  Username     string `json:"username"`
+  PasswordHash string `json:"passwordhash"`
 }
+
 type User struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+  Username string `json:"username"`
+  Password string `json:"password"`
 }
 
-func CheckCredential(username string, password string) bool {
-	user := GetUser("SELECT * FROM accounts WHERE username = $1", []any{username})
-
-	bytePassword := []byte(password)
-	byteHash := []byte(user[0].PasswordHash)
-
-	err := bcrypt.CompareHashAndPassword(byteHash, bytePassword)
-
-	if err != nil {
-		fmt.Println("Err", err.Error())
-		return false
-	}
-	return true
+func VerifyPassword(password,hashedPassword string) error {
+  return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }
 
-func GetUser(sqlStatement string, values []any) []Credential {
-	results, err := getRows(sqlStatement, values)
+func LoginCheck(username string, password string) (string,error) {
 
-	if err != nil {
-		fmt.Println("Err", err.Error())
-		return nil
-	}
+  user := GetSingleCredential("SELECT * FROM accounts WHERE username = $1", []any{username})
 
-	return convertRowsToCredential(results)
+  err := VerifyPassword(password, user.PasswordHash)
+
+  if err != nil || err == bcrypt.ErrMismatchedHashAndPassword {
+   return "", err
+  }
+
+  token,err := token.GenerateToken(user.Id)
+
+  if err != nil {
+   return "",err
+  }
+
+  return token,nil
 }
 
-func convertRowsToCredential(results *sql.Rows) []Credential {
-	credentials := []Credential{}
-	for results.Next() {
-		var prod Credential
-		err := results.Scan(&prod.Id, &prod.Username, &prod.PasswordHash)
-		if err != nil {
-			panic(err.Error())
-		}
-		credentials = append(credentials, prod)
-	}
-	return credentials
+func GetSingleCredential(sqlStatement string, values []any) Credential {
+  credential := Credential{}
+  result := GetRecord(sqlStatement, values)
+  err := result.Scan(&credential.Id, &credential.Username, &credential.PasswordHash)
+
+  if err != nil {
+    panic(err.Error())
+  }
+
+  return credential
 }

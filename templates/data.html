@@ -1,7 +1,6 @@
-<!--article.html-->
 <html>
   <head>
-    <title>Article</title>
+    <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
 
@@ -10,7 +9,9 @@
     <script async src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </head>
   <body>
-      <h1>{{ .token }}</h1>
+      <p>Username: {{ .username }}</p>
+      <p>Id: {{ .Id }}</p>
+      <p>PasswordHash: {{ .passwordhash }}</p>
 
     <form action="/">
       <input type="submit" value="Homepage" />
