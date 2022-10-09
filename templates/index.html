@@ -25,13 +25,8 @@
     <input type="submit" value="Submit">
   </form>
 
-  <form action="/token/">
-    <label for="token">Get token (CSRF):</label>
-    <input type="submit" id="token" value="Submit">
-  </form>
-
-  <form action="/token/" method="POST">
-    <label for="token_validate">Check if token is valid (CSRF):</label>
+  <form action="/data" method="get">
+    <label for="token_validate">Check if token is valid:</label>
     <input type="submit" value="Submit">
   </form>
 

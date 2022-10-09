@@ -12,13 +12,6 @@
   <body>
       <p>Login successful: {{ .authenticated }}</p>
 
-    <form action="/data">
-      <input type="hidden" value={{ .token }}  name="token">
-      <input type="submit" value="Get data" />
-    </form>
-
-    <form action="/">
-      <input type="submit" value="Homepage" />
-    </form>
+      <a href="/">Return to Homepage</a>
   </body>
 </html>
