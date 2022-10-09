@@ -28,6 +28,7 @@ func SignIn(c *gin.Context) {
 		return
 	}
 
+  c.SetSameSite(http.SameSiteStrictMode)
 	c.SetCookie("jwt", token, 3600, "/", "localhost", true, true)
 	c.SetCookie("jwt_insecure", token, 3600, "/", "localhost", false, false)
 
